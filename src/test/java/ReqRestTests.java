@@ -184,6 +184,28 @@ User user = from(response).getObject("", User.class);
         System.out.println(user.getJob());
 
 
+    }
+
+    @Test
+//Registrarse Exitoso
+    public void registerUserTest (){
+
+        CreateUserRequest user = new CreateUserRequest();
+        user .setEmail("eve.holt@reqres.in");
+        user.setPassword("pistol");
+        CreateUserResponse userResponse =
+                given()
+                .when()
+                .body(user)
+                .post("register")
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
+                .body()
+                        .as(CreateUserResponse.class);
+
+        assertThat(userResponse.getId(), equalTo(4));
+        assertThat(userResponse.getToken(), equalTo("QpwL5tke4Pnpja7X4"));
 
     }
 
